@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat App</title>
+</head>
+<body>
+    <h1 id="chat-app-title">Chat App</h1>
+    <input id="message" type="text" placeholder="Enter Message">
+    <button id="send">Send</button>
+
+    <div id="messages"></div>
+
+    <ol id="users"></ol>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const name = prompt("Enter your name:");
+        const socket = io();
+        const send = document.getElementById('send');
+        const messageInput = document.getElementById('message');
+        const allMessages = document.getElementById('messages');
+        const usersList = document.getElementById('users');
+        const chatAppTitle = document.getElementById('chat-app-title');
+
+        chatAppTitle.innerHTML = `Welcome, ${name}!`;
+
+        socket.on('message', (message) => {
+          const p = document.createElement('p');
+          p.innerHTML = `<strong>${message.name}</strong>: ${message.text}`;
+          allMessages.appendChild(p);
+        });
+
+        socket.on('users-update', (users) => {
+          usersList.innerHTML = '';
+          users.forEach((user) => {
+            const li = document.createElement('li');
+            li.innerHTML = user.name;
+            li.dataset.userId = user.id;
+            usersList.appendChild(li);
+          });
+        });
+
+        socket.on('private-message', (message) => {
+          const p = document.createElement('p');
+          p.innerHTML = `<strong>Private message from ${message.from}</strong>: ${message.text}`;
+          allMessages.appendChild(p);
+        });
+
+        send.addEventListener('click', (e) => {
+          const message = messageInput.value;
+          console.log(message);
+          socket.emit('user-message', { name, text: message });
+          messageInput.value = '';
+        });
+
+        usersList.addEventListener('click', (e) => {
+          if (e.target.tagName === 'LI') {
+            const userId = e.target.dataset.userId;
+            const privateMessageInput = prompt("Enter your private message:");
+            socket.emit('private-message', { from: name, to: userId, text: privateMessageInput });
+          }
+        });
+
+        socket.emit('new-user', name);
+    </script>
+</body>
+</html>
