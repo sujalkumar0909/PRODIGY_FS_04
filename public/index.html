@@ -5,16 +5,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Chat App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000000;
+            color: #00FF00;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        header, footer {
+            background-color: #1a1a1a;
+            color: #00FF00;
+            padding: 10px;
+            text-align: center;
+            animation: slideIn 1s ease-in-out;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        #chat-container {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: zoomIn 1s ease-in-out;
+        }
+        @keyframes zoomIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        .futuristic-animation {
+            animation: neonGlow 1.5s infinite alternate;
+        }
+        @keyframes neonGlow {
+            from {
+                text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00, 0 0 20px #00FF00, 0 0 25px #00FF00, 0 0 30px #00FF00, 0 0 35px #00FF00;
+            }
+            to {
+                text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00, 0 0 40px #00FF00, 0 0 50px #00FF00, 0 0 60px #00FF00, 0 0 70px #00FF00;
+            }
+        }
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        header, footer {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            animation: slideIn 1s ease-in-out;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        #chat-container {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: zoomIn 1s ease-in-out;
+        }
+        @keyframes zoomIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        #chat-app-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FF00;
+            text-shadow: 2px 2px 5px #000000;
+            background-color: #000000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00FF00;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: glow 1s ease-in-out infinite alternate, bounce 1s ease-in-out;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00, 0 0 20px #00FF00, 0 0 25px #00FF00, 0 0 30px #00FF00, 0 0 35px #00FF00;
+            }
+            to {
+                text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00, 0 0 40px #00FF00, 0 0 50px #00FF00, 0 0 60px #00FF00, 0 0 70px #00FF00;
+            }
+        }
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-10px);
+            }
+        }
+        #message {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        #send {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            animation: fadeIn 1s ease-in-out;
+        }
+        #send:hover {
+            background-color: #45a049;
+        }
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            height: 300px;
+            overflow-y: scroll;
+            width: 80%;
+            background-color: #fff;
+            animation: fadeIn 1s ease-in-out;
+        }
+        #users {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            height: 200px;
+            overflow-y: scroll;
+            width: 80%;
+            background-color: #fff;
+            animation: fadeIn 1s ease-in-out;
+        }
+        #users li {
+            padding: 10px;
+            cursor: pointer;
+            animation: fadeIn 1s ease-in-out;
+        }
+        #users li:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
-    <h1 id="chat-app-title">Chat App</h1>
-    <input id="message" type="text" placeholder="Enter Message">
-    <button id="send">Send</button>
-
-    <div id="messages"></div>
-
-    <ol id="users"></ol>
-
+    <header>
+        <h1>Welcome to the Chat App</h1>
+    </header>
+    <div id="chat-container">
+        <h1 id="chat-app-title">Chat App</h1>
+        <input id="message" type="text" placeholder="Enter Message">
+        <button id="send">Send</button>
+        <div id="messages"></div>
+        <ol id="users"></ol>
+    </div>
+    <footer>
+        <p>&copy; 2023 Chat App. All rights reserved.</p>
+    </footer>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const name = prompt("Enter your name:");
@@ -29,23 +235,13 @@
 
         socket.on('message', (message) => {
           const p = document.createElement('p');
-          p.innerHTML = `<strong>${message.name}</strong>: ${message.text}`;
-          allMessages.appendChild(p);
-        });
-
-        socket.on('users-update', (users) => {
-          usersList.innerHTML = '';
-          users.forEach((user) => {
-            const li = document.createElement('li');
-            li.innerHTML = user.name;
-            li.dataset.userId = user.id;
-            usersList.appendChild(li);
-          });
-        });
-
-        socket.on('private-message', (message) => {
-          const p = document.createElement('p');
-          p.innerHTML = `<strong>Private message from ${message.from}</strong>: ${message.text}`;
+          p.innerHTML = `<strong style="color: #00FF00; font-family: 'Orbitron', sans-serif;">${message.name}</strong>: <span style="color: #FFFFFF; font-family: 'Orbitron', sans-serif;">${message.text}</span>`;
+          p.style.backgroundColor = '#000000';
+          p.style.padding = '10px';
+          p.style.borderRadius = '10px';
+          p.style.margin = '5px 0';
+          p.style.boxShadow = '0 0 10px #00FF00';
+          p.style.animation = 'fadeIn 1s ease-in-out';
           allMessages.appendChild(p);
         });
 
@@ -62,6 +258,24 @@
             const privateMessageInput = prompt("Enter your private message:");
             socket.emit('private-message', { from: name, to: userId, text: privateMessageInput });
           }
+        });
+
+        socket.on('users-update', (users) => {
+          usersList.innerHTML = '';
+          users.forEach((user) => {
+            const li = document.createElement('li');
+            li.innerHTML = user.name;
+            li.dataset.userId = user.id;
+            li.style.animation = 'fadeIn 1s ease-in-out';
+            usersList.appendChild(li);
+          });
+        });
+
+        socket.on('private-message', (message) => {
+          const p = document.createElement('p');
+          p.innerHTML = `<strong>Private message from ${message.from}</strong>: ${message.text}`;
+          p.style.animation = 'fadeIn 1s ease-in-out';
+          allMessages.appendChild(p);
         });
 
         socket.emit('new-user', name);
